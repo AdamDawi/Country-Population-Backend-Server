@@ -1,15 +1,13 @@
 package example.com.plugins
 
+import example.com.routes.getAllCountries
+import example.com.routes.root
 import io.ktor.application.*
-import io.ktor.http.*
-import io.ktor.request.*
-import io.ktor.response.*
 import io.ktor.routing.*
 
 fun Application.configureRouting() {
     routing {
-        get("/") {
-            call.respondText("Hello World!!!")
-        }
+        root()
+        getAllCountries()
     }
 }
