@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 data class ApiResponse(
     val success: Boolean,
     val message: String? = null,
-    val heroes: List<Country> = emptyList(),
+    val countries: List<Country> = emptyList(),
 )
