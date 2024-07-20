@@ -14,6 +14,24 @@ class CountryRepositoryImpl: CountryRepository {
         )
     }
 
+    override suspend fun searchCountriesContainingText(searchQuery: String?): ApiResponse {
+        return ApiResponse(
+            success = true,
+            message = "OK",
+            countries = findCountriesContainingText(searchQuery)
+        )
+    }
+
+    private fun findCountriesContainingText(countryText: String?): List<Country> {
+        return if(countryText!=null){
+            countryList.filter { country->
+                country.name.lowercase().contains(countryText.lowercase())
+            }
+        }else{
+            emptyList()
+        }
+    }
+
     private val countryList = listOf(
         Country("Afghanistan", 38928341),
         Country("Albania", 2877797),
