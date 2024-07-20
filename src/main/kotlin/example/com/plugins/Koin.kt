@@ -1,8 +1,8 @@
 package example.com.plugins
 
 import example.com.di.koinModule
-import io.ktor.application.*
-import org.koin.ktor.ext.Koin
+import io.ktor.server.application.*
+import org.koin.ktor.plugin.Koin
 import org.koin.logger.slf4jLogger
 
 

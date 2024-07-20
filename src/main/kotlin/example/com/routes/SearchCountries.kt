@@ -1,14 +1,14 @@
 package example.com.routes
 
-import example.com.repository.CountryRepositoryImpl
-import io.ktor.application.*
+import CountryRepository
 import io.ktor.http.*
-import io.ktor.response.*
-import io.ktor.routing.*
+import io.ktor.server.application.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
+import org.koin.ktor.ext.inject
 
 fun Route.searchCountries(){
-    //    val countryRepository: CountryRepositoryImpl by inject()
-    val countryRepository = CountryRepositoryImpl()
+        val countryRepository: CountryRepository by inject()
     get("/countries/search"){
         val searchQuery = call.request.queryParameters["name"]
 
