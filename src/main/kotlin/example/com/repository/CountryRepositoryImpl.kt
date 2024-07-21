@@ -1,6 +1,7 @@
 package example.com.repository
 
 import CountryRepository
+import example.com.common.Constants.OK_MESSAGE
 import example.com.models.ApiResponse
 import example.com.models.Country
 
@@ -9,7 +10,7 @@ class CountryRepositoryImpl: CountryRepository {
         println(countryList.size)
         return ApiResponse(
             success = true,
-            message = "OK",
+            message = OK_MESSAGE,
             countries = countryList
         )
     }
@@ -17,22 +18,22 @@ class CountryRepositoryImpl: CountryRepository {
     override suspend fun searchCountriesContainingText(searchQuery: String?): ApiResponse {
         return ApiResponse(
             success = true,
-            message = "OK",
+            message = OK_MESSAGE,
             countries = findCountriesContainingText(searchQuery)
         )
     }
 
-    private fun findCountriesContainingText(countryText: String?): List<Country> {
-        return if(countryText!=null){
+    private fun findCountriesContainingText(searchQuery: String?): List<Country> {
+        return if(searchQuery!=null){
             countryList.filter { country->
-                country.name.lowercase().contains(countryText.lowercase())
+                country.name.lowercase().contains(searchQuery.lowercase())
             }
         }else{
             emptyList()
         }
     }
 
-    private val countryList = listOf(
+    override val countryList = listOf(
         Country("Afghanistan", 38928341),
         Country("Albania", 2877797),
         Country("Algeria", 43851044),

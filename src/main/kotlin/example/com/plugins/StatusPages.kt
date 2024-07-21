@@ -1,5 +1,6 @@
 package example.com.plugins
 
+import example.com.common.Constants.PAGE_NOT_FOUND_MESSAGE
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.statuspages.*
@@ -11,7 +12,7 @@ fun Application.configureStatusPages() {
             HttpStatusCode.NotFound
         ){call, _->
             call.respond(
-                message = "Page not found",
+                message = PAGE_NOT_FOUND_MESSAGE,
                 status = HttpStatusCode.NotFound
             )
         }
