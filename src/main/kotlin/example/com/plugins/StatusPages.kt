@@ -1,6 +1,7 @@
 package example.com.plugins
 
 import example.com.common.Constants.PAGE_NOT_FOUND_MESSAGE
+import example.com.models.ApiResponse
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.statuspages.*
@@ -18,7 +19,10 @@ fun Application.configureStatusPages() {
         }
         exception<IllegalArgumentException>{ call, exception ->
             call.respond(
-                message = exception.message.toString(),
+                message = ApiResponse(
+                    success = false,
+                    message = exception.message.toString()
+                ),
                 status = HttpStatusCode.BadRequest
             )
         }

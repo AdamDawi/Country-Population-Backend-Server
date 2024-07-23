@@ -5,5 +5,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Country(
     val name: String,
-    val population: Int
+    val population: Int,
+    val image: String
 )
