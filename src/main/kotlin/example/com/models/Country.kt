@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 data class Country(
     val name: String,
     val population: Int,
-    val image: String
+    val flagUrl: String
 )
