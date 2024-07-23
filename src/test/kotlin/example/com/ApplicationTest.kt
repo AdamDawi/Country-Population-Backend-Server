@@ -82,10 +82,29 @@ class ApplicationTest {
     }
 
     @Test
-    fun searchCountries_accessEndpointWithoutParameter_OKStatusResponse() {
+    fun searchCountries_accessEndpointWithoutParameter_BadRequestStatusResponse() {
         withTestApplication(moduleFunction = Application::module) {
             handleRequest(HttpMethod.Get, "/countries/search").apply {
-                assertEquals(HttpStatusCode.OK, response.status())
+                assertEquals(HttpStatusCode.BadRequest, response.status())
+            }
+        }
+    }
+
+    @Test
+    fun searchCountries_accessEndpointWithNumberParameter_emptyCountryListResponse() {
+        withTestApplication(moduleFunction = Application::module) {
+            handleRequest(HttpMethod.Get, "/countries/search?name=21").apply {
+                val response = Json.decodeFromString<ApiResponse>(response.content.toString())
+                assertEquals(emptyList(), response.countries)
+            }
+        }
+    }
+
+    @Test
+    fun searchCountries_accessEndpointWithNumberParameter_BadRequestStatusResponse() {
+        withTestApplication(moduleFunction = Application::module) {
+            handleRequest(HttpMethod.Get, "/countries/search?name=21").apply {
+                assertEquals(HttpStatusCode.BadRequest, response.status())
             }
         }
     }
@@ -93,8 +112,8 @@ class ApplicationTest {
     @Test
     fun searchCountries_accessEndpointWithParameter_correctSingleCountryResponse() {
         val expected = listOf(
-            Country("North Korea", 25778816),
-            Country("South Korea", 51269185)
+            Country("North Korea", 25778816, "/images/KP.png"),
+            Country("South Korea", 51269185, "/images/KR.png")
         )
         withTestApplication(moduleFunction = Application::module) {
             handleRequest(HttpMethod.Get, "/countries/search?name=kor").apply {
@@ -105,8 +124,17 @@ class ApplicationTest {
     }
 
     @Test
+    fun searchCountries_accessEndpointWithParameter_OKStatusResponse() {
+        withTestApplication(moduleFunction = Application::module) {
+            handleRequest(HttpMethod.Get, "/countries/search?name=kor").apply {
+                assertEquals(HttpStatusCode.OK, response.status())
+            }
+        }
+    }
+
+    @Test
     fun searchCountries_accessEndpointWithParameter_correctMultipleCountryResponse() {
-        val expected = listOf(Country("Poland", 38386000))
+        val expected = listOf(Country("Poland", 38386000, "/images/PL.png"))
         withTestApplication(moduleFunction = Application::module) {
             handleRequest(HttpMethod.Get, "/countries/search?name=pol").apply {
                 val response = Json.decodeFromString<ApiResponse>(response.content.toString())
