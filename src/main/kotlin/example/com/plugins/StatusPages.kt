@@ -16,5 +16,11 @@ fun Application.configureStatusPages() {
                 status = HttpStatusCode.NotFound
             )
         }
+        exception<IllegalArgumentException>{ call, exception ->
+            call.respond(
+                message = exception.message.toString(),
+                status = HttpStatusCode.BadRequest
+            )
+        }
     }
 }

@@ -16,6 +16,16 @@ class CountryRepositoryImpl: CountryRepository {
     }
 
     override suspend fun searchCountriesContainingText(searchQuery: String?): ApiResponse {
+        // Check if searchQuery contains non-letter characters
+        searchQuery?.let {
+            if (!searchQuery.all { it.isLetter() }) {
+                throw IllegalArgumentException("Search query must contain only letters.")
+            }
+        }
+        if(searchQuery.isNullOrBlank()){
+            throw IllegalArgumentException("Search query cannot be null or blank.")
+        }
+
         return ApiResponse(
             success = true,
             message = OK_MESSAGE,

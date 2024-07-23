@@ -11,11 +11,13 @@ import io.ktor.server.testing.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import org.koin.java.KoinJavaComponent.inject
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class ApplicationTest {
 
     private val countryRepository: CountryRepository by inject(CountryRepository::class.java)
+
     @Test
     fun root_accessEndpoint_correctMessageResponse() {
         withTestApplication(moduleFunction = Application::module) {
